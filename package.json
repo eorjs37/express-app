@@ -4,12 +4,15 @@
   "description": "express app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "node:dev": "NODE_ENV=development nodemon app.js",
+    "node:prod": "NODE_ENV=production nodemon app.js"
   },
   "author": "CHOI DAE GEON",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "prettier": "2.8.8"

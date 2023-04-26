@@ -32,3 +32,85 @@ app.listen(port, () => {
 ```bash
 node app.js
 ```
+
+## mysql 설치 및 연결
+
+```bash
+npm install --save mysql
+```
+
+```javascript
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '3509',
+  port: 3306,
+  database: 'blog',
+});
+
+connection.connect(err => {
+  if (err) throw err;
+  console.log('connected');
+});
+
+```
+## Database config 구조
+
+```
+├─root
+│  ├─config
+│  │      database.js // 데이터베이스 접속정보 
+│  │      dev.js // dev 데이터베이스 정보
+│  │      prod.js // prod 데이터베이스 접속 정보
+```
+
+```javascript
+//database.js
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./prod');
+} else {
+  module.exports = require('./dev');
+}
+
+```
+
+```javascript
+//dev.js
+module.exports = {
+  host: 'localhost',
+  port: '3306',
+  user: 'root',
+  password: '3509',
+  database: 'blog',
+  connectionLimit: 30,
+};
+
+```
+```javascript
+//prod.js
+module.exports = {
+  host: 'localhost',
+  port: '3306',
+  user: 'root',
+  password: '3509',
+  database: 'blog',
+  connectionLimit: 30,
+};
+```
+
+### app.js 데이터베이스 연결
+
+```javascript
+const dbconfig = require('./config/database');
+const mysql = require('mysql');
+
+const connection = mysql.createConnection(dbconfig);
+connection.connect(err => {
+  if (err) throw err;
+  console.log('connected');
+});
+
+
+```
