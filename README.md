@@ -114,3 +114,36 @@ connection.connect(err => {
 
 
 ```
+
+## connection pool 세팅
+
+src > db 아래에 connection.js(디비연결확인), poolconnection.js(커넥션 풀) 만든다.
+
+```javascript
+//connection.js
+const mysql = require('mysql');
+const dbconfig = require('../../config/database');
+const connection = mysql.createConnection(dbconfig);
+
+module.exports = connection;
+```
+
+```javascript
+//poolconnection.js
+const mysql = require('mysql');
+const dbconfig = require('../../config/database');
+const pool = mysql.createPool(dbconfig);
+
+module.exports = pool;
+```
+
+```javascript
+//app.js
+const conn = require('./src/db/connection');
+
+conn.connect(err => {
+  if (err) throw err;
+  console.log('connected');
+});
+
+```
