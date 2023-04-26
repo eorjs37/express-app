@@ -147,3 +147,38 @@ conn.connect(err => {
 });
 
 ```
+
+## router
+> 업무 및 주제에 맞게 로직을 한곳에 모을 수 있도록 경로를 구분하기 위해사용
+
+### 폴더구조
+```
+├─root
+│  ├─src
+│     ├─router
+│          │ main.js // 경로가 root인 경우 처리
+│          │ users.js // 경로가 /users으로 들어올경우 처리
+```
+
+### 각 라우터 파일 생성
+```javascript
+//main.js
+const express = require('express');
+const router = express.Router();
+
+router.get('/', (req, res) => {
+  res.send('main')
+});
+
+module.exports = router;
+```
+
+### app.js 등록
+
+```javascript
+//app.js
+const main = require('./src/router/main');
+
+app.use('/', main);
+
+```
